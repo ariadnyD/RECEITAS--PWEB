@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Toggle com Efeito Fade</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 50px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-bottom: 20px;
+        }
+        #resultado {
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+            width: 80%;
+            max-width: 500px;
+            min-height: 80px;
+            text-align: center;
+            transition: opacity 0.5s ease-in-out;
+        }
+        .oculto {
+            opacity: 0;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .efeito-entrada {
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        h1 { margin: 0; color: #005f73; }
+    </style>
+</head>
+<body>
+
+    <button onclick="alternarDiv()">Exibir / Ocultar Cerveja</button>
+    <div id="resultado"></div>
+
+    <script>
+        function alternarDiv() {
+            const divResultado = document.getElementById("resultado");
+            if (divResultado.innerHTML.trim() === "") {
+                divResultado.innerHTML = `
+                    <div class="efeito-entrada">
+                        <h1>Guinness</h1>
+                    </div>
+                `;
+
+            } else {
+                divResultado.classList.add('oculto');
+                setTimeout(() => {
+                    divResultado.innerHTML = "";
+                    divResultado.classList.remove('oculto');
+                }, 500);
+            }
+        }
+    </script>
+</body>
+</html>

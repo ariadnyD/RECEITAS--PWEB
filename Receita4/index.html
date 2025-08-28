@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>   
+   <head>
+        <meta charset="UTF-8">
+        <link href="estilo.css" rel="stylesheet">  
+        <title>Receita 4</title>    
+   </head>
+   <body>
+        <div id="meu-amor">
+            <div id="area-botoes">
+                <button id="botaoCarregar">Carregar Cervejas</button>
+                <button id="botaoOrdenar">Mostrar Cervejas Ordenadas</button>
+                <button id="botaoEmbaralhar">Embaralhar Cervejas</button>
+            </div>
+            <div id="area-tabela"></div>
+        </div>           
+   </body> 
+
+   <script>
+        let cervejas = ["Guiness", "Desperados", "Becks", "Heineken", "Stella Artois"];
+        function transformar(item){
+            return `<tr><td>${item}</td></tr>`;
+        }
+        function exibirTabela(arrayDeCervejas) {
+            let divTabela = document.getElementById("area-tabela");
+            let linhasDaTabela = arrayDeCervejas.map(transformar).join("");
+            divTabela.innerHTML = ` 
+                <table class="tabela-cervejas">
+                    <thead>
+                        <tr>
+                            <th>Nome da Cerveja</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${linhasDaTabela}
+                    </tbody>
+                </table>
+            `;
+        }
+        function carregarDiv(){
+            exibirTabela(cervejas);
+        }
+        function carregarDivOrdenada(){
+            cervejas.sort();
+            exibirTabela(cervejas);
+        }
+        function carregarDivEmbaralhada(){
+            cervejas.sort(() => Math.random() - 0.5);
+            exibirTabela(cervejas);
+        }
+        let botaoCarregar = document.getElementById("botaoCarregar");
+        botaoCarregar.addEventListener("click", carregarDiv);
+        
+        let botaoOrdenar = document.getElementById("botaoOrdenar");
+        botaoOrdenar.addEventListener("click", carregarDivOrdenada); 
+
+        let botaoEmbaralhar = document.getElementById("botaoEmbaralhar");
+        botaoEmbaralhar.addEventListener("click", carregarDivEmbaralhada);                               
+   </script>
+</html>
