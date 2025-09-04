@@ -5,7 +5,7 @@
       <title>Receita 6</title>
       <style>
          table {
-            width: 300px;
+            width: 500px; 
             border-collapse: collapse;
             margin-top: 15px;
          }
@@ -26,19 +26,24 @@
    </body>   
    
    <script>
-
       let cervejas = [
          {
             name: "Guiness", 
-            alcohol: "10%"            
+            alcohol: "10%",
+            style: "Imperial Stout",
+            ibu: "55"            
          }, 
          {
             name: "Desperados",
-            alcohol: "6%"             
+            alcohol: "6%",
+            style: "Lager",
+            ibu: "18"             
          }, 
          {
             name: "Becks",
-            alcohol: "5%"             
+            alcohol: "5%",
+            style: "Pilsen",
+            ibu: "25"             
          }
       ];
     
@@ -49,6 +54,8 @@
             <tr>
                <td>${item.name}</td>
                <td>${item.alcohol}</td>
+               <td>${item.style}</td>
+               <td>${item.ibu}</td>
             </tr>
          `).join("");
 
@@ -58,6 +65,8 @@
                   <tr>
                      <th>Nome</th>
                      <th>Álcool</th>
+                     <th>Style</th>
+                     <th>IBU</th>
                   </tr>
                </thead>
                <tbody>
