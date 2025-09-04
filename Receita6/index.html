@@ -1,78 +1,99 @@
 <!DOCTYPE html>
 <html>   
-   <head>
-      <meta charset="UTF-8">
-      <title>Receita 6</title>
-      <style>
-         table {
-            width: 500px; 
-            border-collapse: collapse;
-            margin-top: 15px;
-         }
-         th, td {
-            border: 1px solid #ccc;
-            padding: 8px;
-            text-align: left;
-         }
-         th {
-            background-color: #f2f2f2;
-         }
-      </style>
-   </head>
+    <head>
+        <meta charset="UTF-8">
+        <title>Função Genérica de Tabela Final</title>
+        <style>
+                body { font-family: sans-serif; }
+                table {
+                    width: 500px; 
+                    border-collapse: collapse;
+                    margin-top: 15px;
+                }
+                th, td {
+                    border: 1px solid #ccc;
+                    padding: 8px;
+                    text-align: left;
+                }
+                th {
+                    background-color: #f2f2f2;
+                }
+                button { margin: 5px 0; }
+        </style>
+    </head>
 
-   <body>
-      <div><button id="botaoCarregar">Carregar Cervejas</button></div>
-      <div id="cervejasDiv"></div>
-   </body>   
-   
-   <script>
-      let cervejas = [
-         { name: "Guiness", alcohol: "10%", style: "Imperial Stout", ibu: "55" }, 
-         { name: "Desperados", alcohol: "6%", style: "Lager", ibu: "18" }, 
-         { name: "Becks", alcohol: "5%", style: "Pilsen", ibu: "25" }
-      ];
-      const carregarDiv = (
-         cs, 
-         targetId = "cervejasDiv", 
-         headers = ["Nome", "Álcool", "Estilo", "Amargor"]
-      ) => {
-         
-         const div = document.getElementById(targetId);
-
-         if (!div) {
-            console.error(`O elemento com o id "${targetId}" não foi encontrado.`);
-            return; 
-         }
-         const headerHtml = headers.map(header => `<th>${header}</th>`).join("");
-         
-         const linhasDaTabela = cs.map(item => `
-            <tr>
-               <td>${item.name}</td>
-               <td>${item.alcohol}</td>
-               <td>${item.style}</td>
-               <td>${item.ibu}</td>
-            </tr>
-         `).join("");
-
-         const tabelaHtml = `
-            <table>
-               <thead>
-                  <tr>
-                     ${headerHtml}
-                  </tr>
-               </thead>
-               <tbody>
-                  ${linhasDaTabela}
-               </tbody>
-            </table>
-         `;
-
-         div.innerHTML = tabelaHtml;
-      };
-
-      let botao = document.getElementById("botaoCarregar");
+    <body>
+        <div>
+            <button id="botaoCarregarCervejas">Carregar Cervejas</button>
+            <button id="botaoCarregarLivros">Carregar Livros</button>
+        </div>
       
-      botao.addEventListener("click", () => carregarDiv(cervejas));
+        <div id="tabelaDiv"></div>
+    </body>   
+   
+    <script>
+        const cervejas = [
+            { name: "Guiness", alcohol: "10%", style: "Imperial Stout", ibu: "55" }, 
+            { name: "Desperados", alcohol: "6%", style: "Lager", ibu: "18" }, 
+            { name: "Becks", alcohol: "5%", style: "Pilsen", ibu: "25" }
+        ];
 
-   </script>
+        const livros = [
+            { titulo: "O Senhor dos Anéis", autor: "J.R.R. Tolkien", ano: 1954 },
+            { titulo: "O Guia do Mochileiro das Galáxias", autor: "Douglas Adams", ano: 1979 },
+            { titulo: "1984", autor: "George Orwell", ano: 1949 }
+        ];
+
+        const carregarDiv = (
+            data, 
+            targetId = "tabelaDiv", 
+            headers = [],
+            propertyKeys = []
+        ) => {
+            const div = document.getElementById(targetId);
+            if (!div) {
+                console.error(`O elemento com o id "${targetId}" não foi encontrado.`);
+                return; 
+            }
+
+            const headerHtml = headers.map(header => `<th>${header}</th>`).join("");
+            const linhasDaTabela = data.map(item => {
+                const celulas = propertyKeys.map(key => `<td>${item[key] || ""}</td>`).join("");
+                return `<tr>${celulas}</tr>`;
+            }).join("");
+
+            const tabelaHtml = `
+                <table>
+                <thead>
+                    <tr>
+                        ${headerHtml}
+                    </tr>
+                </thead>
+                <tbody>
+                    ${linhasDaTabela}
+                </tbody>
+                </table>
+            `;
+            div.innerHTML = tabelaHtml;
+        };
+        const botaoCervejas = document.getElementById("botaoCarregarCervejas");
+        botaoCervejas.addEventListener("click", () => {
+            carregarDiv(
+                cervejas, 
+                "tabelaDiv",
+                ["Nome", "Álcool", "Estilo", "Amargor"],
+                ['name', 'alcohol', 'style', 'ibu']
+            );
+        });
+
+        const botaoLivros = document.getElementById("botaoCarregarLivros");
+        botaoLivros.addEventListener("click", () => {
+            carregarDiv(
+                livros,
+                "tabelaDiv",
+                ["Título do Livro", "Autor", "Ano de Publicação"],
+                ['titulo', 'autor', 'ano']
+            );
+        });
+    </script>
 </html>
