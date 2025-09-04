@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>   
+   <head>
+        <meta charset="UTF-8">
+        <title>Sabores de Sorvete com Links</title>
+        <style>
+            body {
+                font-family: sans-serif;
+            }
+            .tabela-sabores {
+                border-collapse: collapse;
+                width: 300px;
+                margin-top: 20px;
+            }
+            .tabela-sabores th, .tabela-sabores td {
+                border: 1px solid #ddd;
+                padding: 8px;
+                text-align: left;
+            }
+            .tabela-sabores th {
+                background-color: #f2f2f2;
+            }
+            #area-comandos a {
+                margin-right: 15px;
+                text-decoration: none;
+                color: blue;
+                cursor: pointer;
+            }
+            #area-comandos a:hover {
+                text-decoration: underline;
+            }
+        </style>
+   </head>
+   <body>
+        <div>
+            <div id="area-comandos">
+                <a href="#" id="botaoCarregar">Carregar Sabores</a>
+                <a href="#" id="botaoOrdenar">Ordenar por Nome</a>
+                <a href="#" id="botaoEmbaralhar">Embaralhar Sabores</a>
+            </div>
+            <div id="area-tabela"></div>
+        </div>           
+   </body> 
+
+   <script>
+        let saboresDeSorvete = ["Chocolate", "Morango", "Flocos", "Pistache", "Creme", "Ninho Trufado"];
+        
+        const transformar = (item) => `<tr><td>${item}</td></tr>`;
+        
+        const exibirTabela = (arrayDeSabores) => {
+            const divTabela = document.getElementById("area-tabela");
+            const linhasDaTabela = arrayDeSabores.map(transformar).join("");
+            divTabela.innerHTML = ` 
+                <table class="tabela-sabores">
+                    <thead>
+                        <tr>
+                            <th>Sabor do Sorvete</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${linhasDaTabela}
+                    </tbody>
+                </table>
+            `;
+        };
+        
+        const carregarSabores = () => {
+            exibirTabela(saboresDeSorvete);
+        };
+        
+        const carregarSaboresOrdenados = () => {
+            saboresDeSorvete.sort();
+            exibirTabela(saboresDeSorvete);
+        };
+        
+        const carregarSaboresEmbaralhados = () => {
+            saboresDeSorvete.sort(() => Math.random() - 0.5);
+            exibirTabela(saboresDeSorvete);
+        };
+        
+        const linkCarregar = document.getElementById("botaoCarregar");
+        const linkOrdenar = document.getElementById("botaoOrdenar"); 
+        const linkEmbaralhar = document.getElementById("botaoEmbaralhar");
+        
+        linkCarregar.addEventListener("click", (event) => {
+            event.preventDefault();
+            carregarSabores();
+        });
+        
+        linkOrdenar.addEventListener("click", (event) => {
+            event.preventDefault();
+            carregarSaboresOrdenados();
+        }); 
+
+        linkEmbaralhar.addEventListener("click", (event) => {
+            event.preventDefault();
+            carregarSaboresEmbaralhados();
+        });                               
+   </script>
+</html>
