@@ -1,81 +1,78 @@
 <!DOCTYPE html>
 <html>   
-    <head>
-        <meta charset="UTF-8">
-        <title>Receita 6</title>
-        <style>
-            table {
-                width: 500px; 
-                border-collapse: collapse;
-                margin-top: 15px;
-            }
-            th, td {
-                border: 1px solid #ccc;
-                padding: 8px;
-                text-align: left;
-            }
-            th {
-                background-color: #f2f2f2;
-            }
-        </style>
-    </head>
+   <head>
+      <meta charset="UTF-8">
+      <title>Receita 6</title>
+      <style>
+         table {
+            width: 500px; 
+            border-collapse: collapse;
+            margin-top: 15px;
+         }
+         th, td {
+            border: 1px solid #ccc;
+            padding: 8px;
+            text-align: left;
+         }
+         th {
+            background-color: #f2f2f2;
+         }
+      </style>
+   </head>
 
-    <body>
-        <div><button id="botaoCarregar">Carregar Cervejas</button></div>
-
-        <div id="cervejasDiv"></div>
-
-        <hr>
-        <h3>Outro local:</h3>
-        <div id="outroLugar"></div>
-
-    </body>   
+   <body>
+      <div><button id="botaoCarregar">Carregar Cervejas</button></div>
+      <div id="cervejasDiv"></div>
+   </body>   
    
    <script>
-        let cervejas = [
-            { name: "Guiness", alcohol: "10%", style: "Imperial Stout", ibu: "55" }, 
-            { name: "Desperados", alcohol: "6%", style: "Lager", ibu: "18" }, 
-            { name: "Becks", alcohol: "5%", style: "Pilsen", ibu: "25" }
-        ];
-        
-        const carregarDiv = (cs, targetId = "cervejasDiv") => {
-            
-            const div = document.getElementById(targetId);
-            if (!div) {
-                console.error(`O elemento com o id "${targetId}" não foi encontrado.`);
-                return; 
-            }
-            
-            const linhasDaTabela = cs.map(item => `
-                <tr>
-                <td>${item.name}</td>
-                <td>${item.alcohol}</td>
-                <td>${item.style}</td>
-                <td>${item.ibu}</td>
-                </tr>
-            `).join("");
+      let cervejas = [
+         { name: "Guiness", alcohol: "10%", style: "Imperial Stout", ibu: "55" }, 
+         { name: "Desperados", alcohol: "6%", style: "Lager", ibu: "18" }, 
+         { name: "Becks", alcohol: "5%", style: "Pilsen", ibu: "25" }
+      ];
+      const carregarDiv = (
+         cs, 
+         targetId = "cervejasDiv", 
+         headers = ["Nome", "Álcool", "Estilo", "Amargor"]
+      ) => {
+         
+         const div = document.getElementById(targetId);
 
-            const tabelaHtml = `
-                <table>
-                <thead>
-                    <tr>
-                        <th>Nome</th>
-                        <th>Álcool</th>
-                        <th>Style</th>
-                        <th>IBU</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    ${linhasDaTabela}
-                </tbody>
-                </table>
-            `;
+         if (!div) {
+            console.error(`O elemento com o id "${targetId}" não foi encontrado.`);
+            return; 
+         }
+         const headerHtml = headers.map(header => `<th>${header}</th>`).join("");
+         
+         const linhasDaTabela = cs.map(item => `
+            <tr>
+               <td>${item.name}</td>
+               <td>${item.alcohol}</td>
+               <td>${item.style}</td>
+               <td>${item.ibu}</td>
+            </tr>
+         `).join("");
 
-            div.innerHTML = tabelaHtml;
-        };
+         const tabelaHtml = `
+            <table>
+               <thead>
+                  <tr>
+                     ${headerHtml}
+                  </tr>
+               </thead>
+               <tbody>
+                  ${linhasDaTabela}
+               </tbody>
+            </table>
+         `;
 
-        let botao = document.getElementById("botaoCarregar");
-        
-        botao.addEventListener("click", () => carregarDiv(cervejas));
-    </script>
+         div.innerHTML = tabelaHtml;
+      };
+
+      let botao = document.getElementById("botaoCarregar");
+      
+      botao.addEventListener("click", () => carregarDiv(cervejas));
+
+   </script>
 </html>
