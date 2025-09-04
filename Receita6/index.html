@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>   
+   <head>
+      <meta charset="UTF-8">
+      <title>Receita 6</title>
+      <style>
+         table {
+            width: 300px;
+            border-collapse: collapse;
+            margin-top: 15px;
+         }
+         th, td {
+            border: 1px solid #ccc;
+            padding: 8px;
+            text-align: left;
+         }
+         th {
+            background-color: #f2f2f2;
+         }
+      </style>
+   </head>
+
+   <body>
+      <div><button id="botaoCarregar">Carregar Cervejas</button></div>
+      <div id="cervejasDiv"></div>            
+   </body>   
+   
+   <script>
+
+      let cervejas = [
+         {
+            name: "Guiness", 
+            alcohol: "10%"            
+         }, 
+         {
+            name: "Desperados",
+            alcohol: "6%"             
+         }, 
+         {
+            name: "Becks",
+            alcohol: "5%"             
+         }
+      ];
+    
+      const carregarDiv = cs => {
+         const div = document.getElementById("cervejasDiv");
+         
+         const linhasDaTabela = cs.map(item => `
+            <tr>
+               <td>${item.name}</td>
+               <td>${item.alcohol}</td>
+            </tr>
+         `).join("");
+
+         const tabelaHtml = `
+            <table>
+               <thead>
+                  <tr>
+                     <th>Nome</th>
+                     <th>Álcool</th>
+                  </tr>
+               </thead>
+               <tbody>
+                  ${linhasDaTabela}
+               </tbody>
+            </table>
+         `;
+
+         div.innerHTML = tabelaHtml;
+      };
+
+      let botao = document.getElementById("botaoCarregar");
+      botao.addEventListener("click", () => carregarDiv(cervejas));                 
+
+   </script>
+</html>
